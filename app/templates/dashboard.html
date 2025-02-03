@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard</h2>
+{% if current_user.role == 'business' %}
+    <a href="{{ url_for('onboarding') }}" class="btn btn-primary mb-3">New Request</a>
+{% endif %}
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>SWIFT Code</th>
+                <th>Status</th>
+                {% if current_user.role != 'business' %}
+                <th>Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in requests %}
+            <tr>
+                <td>{{ request.company_name }}</td>
+                <td>{{ request.swift_code }}</td>
+                <td>{{ request.status }}</td>
+                {% if current_user.role != 'business' %}
+                <td>
+                    <a href="{{ url_for('handle_request', request_id=request.id, action='approve') }}" 
+                       class="btn btn-sm btn-success">Approve</a>
+                    <a href="{{ url_for('handle_request', request_id=request.id, action='reject') }}" 
+                       class="btn btn-sm btn-danger">Reject</a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 
