@@ -30,10 +30,18 @@ python -m venv venv
 
 2. Install dependencies:
 ```bash
-pip install flask flask-sqlalchemy flask-login flask-wtf
+pip install flask flask-sqlalchemy flask-login flask-wtf pymysql
 ```
 
-3. Run the application:
+3. Create MariaDB database and user:
+```sql
+CREATE DATABASE swift_connect;
+CREATE USER 'swift_user'@'localhost' IDENTIFIED BY 'swift_password';
+GRANT ALL PRIVILEGES ON swift_connect.* TO 'swift_user'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+4. Run the application:
 ```bash
 python run.py
 ```
@@ -59,7 +67,7 @@ The application creates two test users automatically:
 
 ### Technology Stack
 - Python/Flask
-- SQLite database
+- MariaDB database
 - Flask-SQLAlchemy
 - Flask-Login
 - Bootstrap CSS
